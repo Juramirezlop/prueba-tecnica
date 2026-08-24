@@ -1,9 +1,5 @@
-"""Esquemas Pydantic usados para validar los datos que llegan por formulario."""
-
 from typing import Optional
-
 from pydantic import BaseModel
-
 
 class SecopForm(BaseModel):
     referencia: str
@@ -14,7 +10,6 @@ class SecopForm(BaseModel):
     fecha_publicacion: Optional[str] = None
     fecha_presentacion_ofertas: Optional[str] = None
     url_detalle: Optional[str] = None
-
 
 class CC2026Form(BaseModel):
     radicacion: str

@@ -1,6 +1,5 @@
-"""Modelos de base de datos.
-
-Tres tablas:
+"""
+Modelos de base de datos:
 - usuarios: cuentas de acceso con rol (administrador, digitador, consulta).
 - secop: datos depurados de la hoja SECOP. Llave de negocio: referencia.
 - cc2026: datos depurados de la hoja CC2026. Llave de negocio: radicacion.
@@ -8,9 +7,7 @@ Tres tablas:
 
 from sqlalchemy import Column, DateTime, Integer, String, Text
 from sqlalchemy.sql import func
-
 from app.database import Base
-
 
 class Usuario(Base):
     __tablename__ = "usuarios"
@@ -18,8 +15,7 @@ class Usuario(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, nullable=False, index=True)
     password_hash = Column(String(255), nullable=False)
-    rol = Column(String(20), nullable=False)  # administrador | digitador | consulta
-
+    rol = Column(String(20), nullable=False)
 
 class Secop(Base):
     __tablename__ = "secop"
@@ -35,7 +31,6 @@ class Secop(Base):
     url_detalle = Column(Text)
     creado_en = Column(DateTime(timezone=True), server_default=func.now())
     actualizado_en = Column(DateTime(timezone=True), onupdate=func.now())
-
 
 class CC2026(Base):
     __tablename__ = "cc2026"

@@ -1,17 +1,15 @@
-"""Rutas CRUD para la hoja SECOP. Llave de negocio: referencia."""
+"""Rutas hoja SECOP. Llave de negocio: referencia."""
 
 from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-
 from app.auth import requerir_permiso
 from app.database import get_db
 from app.models import Secop
 
 router = APIRouter(prefix="/secop", tags=["secop"])
 templates = Jinja2Templates(directory="app/templates")
-
 
 @router.get("", response_class=HTMLResponse)
 def listar(
@@ -29,14 +27,12 @@ def listar(
         {"request": request, "registros": registros, "usuario": usuario, "q": q},
     )
 
-
 @router.get("/nuevo", response_class=HTMLResponse)
 def form_crear(request: Request, usuario=Depends(requerir_permiso("crear"))):
     return templates.TemplateResponse(
         "secop_form.html",
         {"request": request, "usuario": usuario, "registro": None, "modo": "crear"},
     )
-
 
 @router.post("/nuevo")
 def crear(
@@ -66,7 +62,6 @@ def crear(
     db.commit()
     return RedirectResponse(url="/secop", status_code=303)
 
-
 @router.get("/{referencia}/editar", response_class=HTMLResponse)
 def form_editar(
     referencia: str,
@@ -79,7 +74,6 @@ def form_editar(
         "secop_form.html",
         {"request": request, "usuario": usuario, "registro": registro, "modo": "editar"},
     )
-
 
 @router.post("/{referencia}/editar")
 def editar(
@@ -105,7 +99,6 @@ def editar(
         registro.url_detalle = url_detalle
         db.commit()
     return RedirectResponse(url="/secop", status_code=303)
-
 
 @router.post("/{referencia}/eliminar")
 def eliminar(

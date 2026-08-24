@@ -1,9 +1,3 @@
-"""Punto de entrada de la aplicacion.
-
-Define el home, el login/logout, el manejo de errores de autenticacion,
-y monta los routers de SECOP y CC2026.
-"""
-
 from fastapi import Depends, FastAPI, Form, Request
 from fastapi.exceptions import HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -11,7 +5,6 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from starlette.status import HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN
-
 from app.auth import crear_token_sesion, obtener_usuario_actual, verificar_password
 from app.database import get_db
 from app.models import Usuario
@@ -24,7 +17,6 @@ templates = Jinja2Templates(directory="app/templates")
 
 app.include_router(secop.router)
 app.include_router(cc2026.router)
-
 
 @app.exception_handler(HTTPException)
 async def manejar_error_http(request: Request, exc: HTTPException):
@@ -44,17 +36,14 @@ async def manejar_error_http(request: Request, exc: HTTPException):
         status_code=exc.status_code,
     )
 
-
 @app.get("/", response_class=HTMLResponse)
 def home(request: Request, db: Session = Depends(get_db)):
     usuario = obtener_usuario_actual(request, db)
     return templates.TemplateResponse("home.html", {"request": request, "usuario": usuario})
 
-
 @app.get("/login", response_class=HTMLResponse)
 def login_form(request: Request, next: str = "/"):
     return templates.TemplateResponse("login.html", {"request": request, "error": None, "next": next})
-
 
 @app.post("/login")
 def login(
@@ -83,7 +72,6 @@ def login(
         max_age=60 * 60 * 2,
     )
     return respuesta
-
 
 @app.get("/logout")
 def logout():

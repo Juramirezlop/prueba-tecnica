@@ -72,7 +72,6 @@ a {
     color: var(--color-texto-suave);
 }
 
-/* Contenido */
 .contenido {
     max-width: 1100px;
     margin: 0 auto;
@@ -276,14 +275,14 @@ a {
     border-radius: var(--radio);
 }
 
-/* Rol consulta: se bloquea la seleccion y copia de texto en pantalla */
+/* Se bloquea la seleccion y copia de texto en pantalla */
 .rol-consulta {
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
 }
 
-/* Responsive: tablas en tarjetas apiladas para pantallas pequenas */
+/* Responsive */
 @media (max-width: 640px) {
     .tabla-datos thead {
         display: none;

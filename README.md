@@ -1,14 +1,11 @@
 # Prueba tecnica — SECOP y CC2026
 
-Aplicativo web para consultar y administrar los registros de dos fuentes
-de datos: procesos de contratacion de SECOP y expedientes de la Corte
-Constitucional (CC2026).
+Aplicativo web para consultar y administrar los registros de dos fuentes de datos
 
 ## Stack
 
-FastAPI (backend y renderizado de HTML) + PostgreSQL + SQLAlchemy +
-Jinja2 + HTML/CSS/JS sin framework de frontend. Arquitectura monolitica,
-pensada para el alcance de esta prueba.
+FastAPI (backend y renderizado de HTML) + PostgreSQL + SQLAlchemy + Jinja2 + HTML/CSS/JS. 
+Arquitectura monolitica, pensada para el alcance de esta prueba.
 
 ## Contenido
 
@@ -16,8 +13,7 @@ pensada para el alcance de esta prueba.
   plantillas, estaticos).
 - `scripts/setup_db.py`: limpia el Excel original, crea las tablas, crea
   los usuarios de prueba y carga los datos. Un solo comando.
-- `docs/quickstart.md`: guia de instalacion local, despliegue en Railway,
-  proceso de depuracion de datos, y notas para la sustentacion tecnica.
+- `docs/quickstart.md`: guia de instalacion local, despliegue en Railway.
 
 ## Inicio rapido
 
@@ -31,6 +27,3 @@ cp .env.example .env   # ajustar DATABASE_URL
 python scripts/setup_db.py
 uvicorn app.main:app --reload
 ```
-
-Usuarios de prueba: `admin/admin123`, `digitador/digitador123`,
-`consulta/consulta123` (ver detalle de permisos en `docs/quickstart.md`).

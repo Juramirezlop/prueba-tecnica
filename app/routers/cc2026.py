@@ -1,17 +1,15 @@
-"""Rutas CRUD para la hoja CC2026. Llave de negocio: radicacion."""
+"""Ruta hoja CC2026. Llave de negocio: radicacion."""
 
 from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
-
 from app.auth import requerir_permiso
 from app.database import get_db
 from app.models import CC2026
 
 router = APIRouter(prefix="/cc2026", tags=["cc2026"])
 templates = Jinja2Templates(directory="app/templates")
-
 
 @router.get("", response_class=HTMLResponse)
 def listar(
@@ -29,14 +27,12 @@ def listar(
         {"request": request, "registros": registros, "usuario": usuario, "q": q},
     )
 
-
 @router.get("/nuevo", response_class=HTMLResponse)
 def form_crear(request: Request, usuario=Depends(requerir_permiso("crear"))):
     return templates.TemplateResponse(
         "cc2026_form.html",
         {"request": request, "usuario": usuario, "registro": None, "modo": "crear"},
     )
-
 
 @router.post("/nuevo")
 def crear(
@@ -68,7 +64,6 @@ def crear(
     db.commit()
     return RedirectResponse(url="/cc2026", status_code=303)
 
-
 @router.get("/{radicacion}/editar", response_class=HTMLResponse)
 def form_editar(
     radicacion: str,
@@ -81,7 +76,6 @@ def form_editar(
         "cc2026_form.html",
         {"request": request, "usuario": usuario, "registro": registro, "modo": "editar"},
     )
-
 
 @router.post("/{radicacion}/editar")
 def editar(
@@ -109,7 +103,6 @@ def editar(
         registro.capture_date = capture_date
         db.commit()
     return RedirectResponse(url="/cc2026", status_code=303)
-
 
 @router.post("/{radicacion}/eliminar")
 def eliminar(
