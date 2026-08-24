@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block titulo %}{% if modo == "crear" %}Nuevo registro SECOP{% else %}Editar registro SECOP{% endif %}{% endblock %}
+{% block contenido %}
+<section class="panel-form">
+    <h1>{% if modo == "crear" %}Nuevo registro SECOP{% else %}Editar registro SECOP{% endif %}</h1>
+
+    <form method="post" action="{% if modo == 'crear' %}/secop/nuevo{% else %}/secop/{{ registro.referencia }}/editar{% endif %}">
+        <label for="referencia">Referencia (llave)</label>
+        <input type="text" id="referencia" name="referencia" value="{{ registro.referencia if registro else '' }}"
+               {% if modo == "editar" %}readonly{% else %}required{% endif %}>
+
+        <label for="pais">Pais</label>
+        <input type="text" id="pais" name="pais" value="{{ registro.pais if registro else '' }}">
+
+        <label for="entidad_estatal">Entidad estatal</label>
+        <input type="text" id="entidad_estatal" name="entidad_estatal" value="{{ registro.entidad_estatal if registro else '' }}">
+
+        <label for="descripcion">Descripcion</label>
+        <textarea id="descripcion" name="descripcion" rows="3">{{ registro.descripcion if registro else '' }}</textarea>
+
+        <label for="fase_actual">Fase actual</label>
+        <input type="text" id="fase_actual" name="fase_actual" value="{{ registro.fase_actual if registro else '' }}">
+
+        <label for="fecha_publicacion">Fecha de publicacion</label>
+        <input type="text" id="fecha_publicacion" name="fecha_publicacion" value="{{ registro.fecha_publicacion if registro else '' }}">
+
+        <label for="fecha_presentacion_ofertas">Fecha de presentacion de ofertas</label>
+        <input type="text" id="fecha_presentacion_ofertas" name="fecha_presentacion_ofertas" value="{{ registro.fecha_presentacion_ofertas if registro else '' }}">
+
+        <label for="url_detalle">URL de detalle</label>
+        <input type="url" id="url_detalle" name="url_detalle" value="{{ registro.url_detalle if registro else '' }}">
+
+        <div class="acciones-form">
+            <button class="boton" type="submit">Guardar</button>
+            <a class="boton boton-secundario" href="/secop">Cancelar</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

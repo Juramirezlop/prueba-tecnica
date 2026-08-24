@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block titulo %}{% if modo == "crear" %}Nuevo registro CC2026{% else %}Editar registro CC2026{% endif %}{% endblock %}
+{% block contenido %}
+<section class="panel-form">
+    <h1>{% if modo == "crear" %}Nuevo registro CC2026{% else %}Editar registro CC2026{% endif %}</h1>
+
+    <form method="post" action="{% if modo == 'crear' %}/cc2026/nuevo{% else %}/cc2026/{{ registro.radicacion }}/editar{% endif %}">
+        <label for="radicacion">Radicacion (llave)</label>
+        <input type="text" id="radicacion" name="radicacion" value="{{ registro.radicacion if registro else '' }}"
+               {% if modo == "editar" %}readonly{% else %}required{% endif %}>
+
+        <label for="numero">Numero</label>
+        <input type="text" id="numero" name="numero" value="{{ registro.numero if registro else '' }}">
+
+        <label for="ponente">Ponente</label>
+        <input type="text" id="ponente" name="ponente" value="{{ registro.ponente if registro else '' }}">
+
+        <label for="norma_demandada">Norma demandada</label>
+        <textarea id="norma_demandada" name="norma_demandada" rows="3">{{ registro.norma_demandada if registro else '' }}</textarea>
+
+        <label for="demandante">Demandante</label>
+        <input type="text" id="demandante" name="demandante" value="{{ registro.demandante if registro else '' }}">
+
+        <label for="fecha">Fecha</label>
+        <input type="text" id="fecha" name="fecha" value="{{ registro.fecha if registro else '' }}">
+
+        <label for="url_proceso">URL proceso</label>
+        <input type="url" id="url_proceso" name="url_proceso" value="{{ registro.url_proceso if registro else '' }}">
+
+        <label for="url_demanda">URL demanda</label>
+        <input type="url" id="url_demanda" name="url_demanda" value="{{ registro.url_demanda if registro else '' }}">
+
+        <label for="capture_date">Fecha de captura</label>
+        <input type="text" id="capture_date" name="capture_date" value="{{ registro.capture_date if registro else '' }}">
+
+        <div class="acciones-form">
+            <button class="boton" type="submit">Guardar</button>
+            <a class="boton boton-secundario" href="/cc2026">Cancelar</a>
+        </div>
+    </form>
+</section>
+{% endblock %}

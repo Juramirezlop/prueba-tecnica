@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Prueba Tecnica{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="{% if usuario and usuario.rol == 'consulta' %}rol-consulta{% endif %}">
+    <header class="topbar">
+        <a class="marca" href="/">SECOP / CC2026</a>
+        <nav class="nav-principal">
+            <a href="/secop">SECOP</a>
+            <a href="/cc2026">CC2026</a>
+        </nav>
+        <div class="sesion">
+            {% if usuario %}
+                <span class="usuario-info">{{ usuario.username }} · {{ usuario.rol }}</span>
+                <a class="boton boton-secundario" href="/logout">Salir</a>
+            {% else %}
+                <a class="boton boton-secundario" href="/login">Iniciar sesion</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="contenido">
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <footer class="pie">
+        <span>Prueba tecnica &middot; SECOP y CC2026</span>
+    </footer>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

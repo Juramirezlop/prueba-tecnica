@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titulo %}Inicio{% endblock %}
+{% block contenido %}
+<section class="hero">
+    <h1>Consulta y gestion de datos</h1>
+    <p>Servicio web para la gestion de los registros de las hojas SECOP y CC2026.</p>
+</section>
+
+<section class="tarjetas">
+    <a class="tarjeta" href="/secop">
+        <h2>SECOP</h2>
+        <p>Procesos de contratacion. Consultar, crear y administrar registros.</p>
+    </a>
+    <a class="tarjeta" href="/cc2026">
+        <h2>CC2026</h2>
+        <p>Expedientes de la Corte Constitucional. Consultar, crear y administrar registros.</p>
+    </a>
+</section>
+
+{% if not usuario %}
+<section class="aviso">
+    <p>Para crear, modificar o eliminar registros necesitas iniciar sesion. La consulta de registros tambien requiere una cuenta.</p>
+    <a class="boton" href="/login">Iniciar sesion</a>
+</section>
+{% endif %}
+{% endblock %}

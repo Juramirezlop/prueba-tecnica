@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block titulo %}SECOP{% endblock %}
+{% block contenido %}
+<section class="encabezado-lista">
+    <h1>SECOP</h1>
+    <div class="acciones-lista">
+        <form class="form-busqueda" method="get" action="/secop">
+            <input type="text" name="q" value="{{ q }}" placeholder="Buscar por referencia">
+            <button class="boton boton-secundario" type="submit">Buscar</button>
+        </form>
+        {% if usuario.rol in ["administrador", "digitador"] %}
+        <a class="boton" href="/secop/nuevo">Nuevo registro</a>
+        {% endif %}
+    </div>
+</section>
+
+<div class="tabla-scroll">
+<table class="tabla-datos">
+    <thead>
+        <tr>
+            <th>Referencia</th>
+            <th>Entidad estatal</th>
+            <th>Fase actual</th>
+            <th>Fecha publicacion</th>
+            <th>Detalle</th>
+            {% if usuario.rol in ["administrador", "digitador"] %}
+            <th>Acciones</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in registros %}
+        <tr>
+            <td data-etiqueta="Referencia">{{ r.referencia }}</td>
+            <td data-etiqueta="Entidad estatal">{{ r.entidad_estatal }}</td>
+            <td data-etiqueta="Fase actual">{{ r.fase_actual }}</td>
+            <td data-etiqueta="Fecha publicacion">{{ r.fecha_publicacion }}</td>
+            <td data-etiqueta="Detalle">
+                {% if r.url_detalle %}
+                <a href="{{ r.url_detalle }}" target="_blank" rel="noopener noreferrer">Ver</a>
+                {% endif %}
+            </td>
+            {% if usuario.rol in ["administrador", "digitador"] %}
+            <td data-etiqueta="Acciones" class="celda-acciones">
+                {% if usuario.rol == "administrador" %}
+                <a class="enlace-accion" href="/secop/{{ r.referencia }}/editar">Editar</a>
+                <form method="post" action="/secop/{{ r.referencia }}/eliminar" onsubmit="return confirm('Eliminar este registro?');">
+                    <button class="enlace-accion enlace-peligro" type="submit">Eliminar</button>
+                </form>
+                {% endif %}
+            </td>
+            {% endif %}
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No hay registros para mostrar.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}

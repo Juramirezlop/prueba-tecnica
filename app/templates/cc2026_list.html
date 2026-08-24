@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block titulo %}CC2026{% endblock %}
+{% block contenido %}
+<section class="encabezado-lista">
+    <h1>CC2026</h1>
+    <div class="acciones-lista">
+        <form class="form-busqueda" method="get" action="/cc2026">
+            <input type="text" name="q" value="{{ q }}" placeholder="Buscar por radicacion">
+            <button class="boton boton-secundario" type="submit">Buscar</button>
+        </form>
+        {% if usuario.rol in ["administrador", "digitador"] %}
+        <a class="boton" href="/cc2026/nuevo">Nuevo registro</a>
+        {% endif %}
+    </div>
+</section>
+
+<div class="tabla-scroll">
+<table class="tabla-datos">
+    <thead>
+        <tr>
+            <th>Radicacion</th>
+            <th>Ponente</th>
+            <th>Demandante</th>
+            <th>Fecha</th>
+            <th>Demanda</th>
+            {% if usuario.rol in ["administrador", "digitador"] %}
+            <th>Acciones</th>
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in registros %}
+        <tr>
+            <td data-etiqueta="Radicacion">{{ r.radicacion }}</td>
+            <td data-etiqueta="Ponente">{{ r.ponente }}</td>
+            <td data-etiqueta="Demandante">{{ r.demandante }}</td>
+            <td data-etiqueta="Fecha">{{ r.fecha }}</td>
+            <td data-etiqueta="Demanda">
+                {% if r.url_demanda %}
+                <a href="{{ r.url_demanda }}" target="_blank" rel="noopener noreferrer">Ver</a>
+                {% endif %}
+            </td>
+            {% if usuario.rol in ["administrador", "digitador"] %}
+            <td data-etiqueta="Acciones" class="celda-acciones">
+                {% if usuario.rol == "administrador" %}
+                <a class="enlace-accion" href="/cc2026/{{ r.radicacion }}/editar">Editar</a>
+                <form method="post" action="/cc2026/{{ r.radicacion }}/eliminar" onsubmit="return confirm('Eliminar este registro?');">
+                    <button class="enlace-accion enlace-peligro" type="submit">Eliminar</button>
+                </form>
+                {% endif %}
+            </td>
+            {% endif %}
+        </tr>
+        {% else %}
+        <tr><td colspan="6">No hay registros para mostrar.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+{% endblock %}
