@@ -1,4 +1,4 @@
-// Restriccion para el rol "consulta": evita copiar texto en pantalla.
+// Restriccion para el rol consulta
 
 (function () {
     if (!document.body.classList.contains("rol-consulta")) {

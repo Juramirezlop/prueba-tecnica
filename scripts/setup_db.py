@@ -2,12 +2,13 @@ import re
 import sys
 import unicodedata
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import pandas as pd
 from app.auth import hash_password
 from app.database import Base, SessionLocal, engine
 from app.models import CC2026, Secop, Usuario
-
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"

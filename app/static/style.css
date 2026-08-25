@@ -72,6 +72,7 @@ a {
     color: var(--color-texto-suave);
 }
 
+/* Contenido */
 .contenido {
     max-width: 1100px;
     margin: 0 auto;
@@ -182,6 +183,13 @@ a {
     border-radius: var(--radio);
 }
 
+.resumen-lista {
+    font-size: 0.85rem;
+    color: var(--color-texto-suave);
+    margin-top: 12px;
+    text-align: center;
+}
+
 .tabla-scroll {
     overflow-x: auto;
     background-color: var(--color-superficie);
@@ -253,6 +261,10 @@ a {
     color: var(--color-texto-suave);
 }
 
+.panel-form form > button.boton {
+    margin-top: 24px;
+}
+
 .panel-form input,
 .panel-form textarea {
     padding: 10px;
@@ -275,14 +287,54 @@ a {
     border-radius: var(--radio);
 }
 
-/* Se bloquea la seleccion y copia de texto en pantalla */
+/* Paginacion */
+.paginacion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagina-link,
+.pagina-puntos {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border-radius: var(--radio);
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: var(--color-primario);
+    border: 1px solid var(--color-borde);
+}
+
+.pagina-link:hover {
+    background-color: #eaf0f6;
+}
+
+.pagina-actual {
+    background-color: var(--color-primario);
+    color: #fff;
+    border-color: var(--color-primario);
+}
+
+.pagina-puntos {
+    border: none;
+    color: var(--color-texto-suave);
+}
+
+/* Rol consulta: se bloquea la seleccion y copia de texto en pantalla */
 .rol-consulta {
     user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
 }
 
-/* Responsive */
+/* Responsive: tablas en tarjetas apiladas para pantallas pequenas */
 @media (max-width: 640px) {
     .tabla-datos thead {
         display: none;

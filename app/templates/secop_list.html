@@ -57,4 +57,24 @@
     </tbody>
 </table>
 </div>
+
+<p class="resumen-lista">{{ total_registros }} registro(s) &middot; pagina {{ page }} de {{ total_paginas }}</p>
+
+{% if total_paginas > 1 %}
+<nav class="paginacion">
+    {% if page > 1 %}
+    <a class="pagina-link" href="/secop?q={{ q }}&page={{ page - 1 }}">Anterior</a>
+    {% endif %}
+    {% for p in paginas %}
+        {% if p is none %}
+        <span class="pagina-puntos">&hellip;</span>
+        {% else %}
+        <a class="pagina-link {% if p == page %}pagina-actual{% endif %}" href="/secop?q={{ q }}&page={{ p }}">{{ p }}</a>
+        {% endif %}
+    {% endfor %}
+    {% if page < total_paginas %}
+    <a class="pagina-link" href="/secop?q={{ q }}&page={{ page + 1 }}">Siguiente</a>
+    {% endif %}
+</nav>
+{% endif %}
 {% endblock %}

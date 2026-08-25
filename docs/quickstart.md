@@ -23,12 +23,14 @@ PostgreSQL como base de datos, y HTML/CSS/JS.
 2. Crear la base de datos en PostgreSQL:
 
    ```
+   psql -U postgres (para iniciar sesion con usuario de instalacion estandar)
+   
    psql -U postgres -c "CREATE DATABASE prueba_tecnica;"
    ```
 
 3. Copiar `.env.example` a `.env` y ajustar `DATABASE_URL` con el usuario, password y puerto de tu PostgreSQL local.
 
-4. Colocar el archivo `PRUEBA_TECNICA.xlsx` (el original de la prueba) en la carpeta `data/`.
+4. Crea la carpeta `data/`, luego se debe colocar el archivo `PRUEBA_TECNICA.xlsx` en la carpeta creada.
 
 5. Ejecutar el script de preparacion. Este script limpia los datos, crea las tablas, crea los usuarios de prueba y carga los datos, todo en un solo paso:
 

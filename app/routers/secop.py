@@ -1,4 +1,4 @@
-"""Rutas hoja SECOP. Llave de negocio: referencia."""
+"""Rutas CRUD para la hoja SECOP. Llave de negocio: referencia."""
 
 from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 from app.auth import requerir_permiso
 from app.database import get_db
 from app.models import Secop
+from app.pagination import PAGE_SIZE, calcular_total_paginas, rango_paginas
 
 router = APIRouter(prefix="/secop", tags=["secop"])
 templates = Jinja2Templates(directory="app/templates")
@@ -15,16 +16,37 @@ templates = Jinja2Templates(directory="app/templates")
 def listar(
     request: Request,
     q: str = "",
+    page: int = 1,
     db: Session = Depends(get_db),
     usuario=Depends(requerir_permiso("consultar")),
 ):
     query = db.query(Secop)
     if q:
         query = query.filter(Secop.referencia.ilike(f"%{q}%"))
-    registros = query.order_by(Secop.referencia).all()
+
+    total_registros = query.count()
+    total_paginas = calcular_total_paginas(total_registros)
+    page = max(1, min(page, total_paginas))
+
+    registros = (
+        query.order_by(Secop.referencia)
+        .offset((page - 1) * PAGE_SIZE)
+        .limit(PAGE_SIZE)
+        .all()
+    )
+
     return templates.TemplateResponse(
         "secop_list.html",
-        {"request": request, "registros": registros, "usuario": usuario, "q": q},
+        {
+            "request": request,
+            "registros": registros,
+            "usuario": usuario,
+            "q": q,
+            "page": page,
+            "total_paginas": total_paginas,
+            "paginas": rango_paginas(page, total_paginas),
+            "total_registros": total_registros,
+        },
     )
 
 @router.get("/nuevo", response_class=HTMLResponse)
